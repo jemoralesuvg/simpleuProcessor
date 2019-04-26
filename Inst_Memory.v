@@ -1,5 +1,4 @@
 module Inst_Memory(
-  input clk, enable,
   input[10:0]address,
   output[13:0] data_out
 );
@@ -9,6 +8,6 @@ module Inst_Memory(
   assign data_out = memory[address];
   
 initial begin
- $readmemb("instructions.list", memory);
+ $readmemh("instructions.list", memory);
 end
 endmodule
