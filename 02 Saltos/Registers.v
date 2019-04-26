@@ -4,8 +4,9 @@ module Registers (
 	input [7:0] data_in,
 	output [7:0] out_A, out_B
 );
-
+    wire [7:0] A, B;
   	reg [7:0] memory [0:16];
+	wire [7:0] D;
   
   	assign out_A = memory[address_A];
   	assign out_B = memory[address_B];
@@ -13,7 +14,6 @@ module Registers (
   	always @ (negedge nclk) begin
 		if(enable == 1) begin
 			memory[address_D] <= data_in;
-			//$display("R%d = %d",address_D, data_in);
       	end
   	end
   
@@ -21,7 +21,7 @@ module Registers (
   	integer i;
   	initial begin
       for (i = 0; i < 128; i= i + 1) 
-        memory[i] = i;
+        memory[i] = 2*i;
     end
 	
 endmodule
