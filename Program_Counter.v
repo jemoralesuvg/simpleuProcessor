@@ -1,15 +1,17 @@
 module Counter(
-  input clk, reset, 
-  output [10:0] out
+  input clk, reset, load, 
+  input [7:0] in,
+  output [7:0] out
 );
-  reg [10:0]out;
+  reg [7:0]out;
   
   	always @ (posedge clk)
-      if(reset) begin
-      	out <= 0;
-      end else begin
+      if(reset)
+		out <= 0;
+      else if (load)
+		out <= in;
+		else
           out <= out + 1;
-      end
   
 initial begin
     out <= 1'b0;
