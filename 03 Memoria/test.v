@@ -3,7 +3,6 @@
 `include "ALU.v"
 `include "MUX.v"
 `include "Decode.v"
-`include "Stack.v"
 
 module test;
 	// wires y regs
@@ -11,10 +10,9 @@ module test;
 	wire [7:0] pc_count;
 	wire [15:0] instruction;
 	wire [7:0]	a, b, data, inm, bi, bf, j_offset, pc_load;
-	wire [7:0] d_alu, d_mem, pc_jump, pc_stack;
+	wire [7:0] d_alu, d_mem, pc_jump;
 	wire [3:0]	address_A, address_B, address_D, opcode;
 	wire vdd, c_Inm, c_extend, c_cond, zero, c_data, reg_write, mem_write;
-	wire s_down, s_up, c_stack;
 	wire [1:0]	c_ALU;
 
 	// bit swizzling
@@ -27,10 +25,10 @@ module test;
 	
 	
 	// procesor
-	Counter 	PC	 		(clk, reset, c_cond & zero +  c_stack, pc_load, pc_count);
+	Counter 	PC	 		(clk, reset, c_cond & zero +  c_stack, pc_jump, pc_count);
 	ROM			mem_inst	(pc_count, instruction);
 	Decoder		Decode		(opcode, c_ALU, c_Inm, c_extend, c_cond, 
-							reg_write, mem_write, c_data, s_up, s_down, c_stack);
+							reg_write, mem_write, c_data);
 	Registers	Reg1		(clk, reg_write, address_A, address_B, address_D, data, a, b);
 	ALU			ALU1		(c_ALU, a, bf, d_alu, zero);
 	MUX8_2x1	Inm_B		(c_Inm, b, inm, bi);
@@ -39,14 +37,12 @@ module test;
 	Adder		PC_Add		(pc_count, j_offset, pc_jump);
 	MUX8_2x1	mux_data	(c_data, d_alu, d_mem, data);
 	RAM			mem_data	(clk, mem_write, a, b, d_mem);
-	MUX8_2x1	mux_stack	(c_stack, pc_jump, pc_stack, pc_load);
-	Stack		stack		(clk, s_up, s_down, pc_count,pc_stack);
 	
 	// monitor
 	initial begin
-		$display("PC \tInst \tA \tB \tBf \tjump \tload \tstack");
+		$display("PC \tInst \tA \tB \tBf \tjump \td_ALU \td_Mem");
 		$monitor("%d \t%h \t%d \t%d \t%d \t%d \t%d \t%d", 
-			pc_count, instruction, a, b, j_offset, pc_jump, pc_load, pc_stack);
+			pc_count, instruction, a, b, j_offset, pc_jump, d_mem, d_alu );
 	end
 	
 	// reset inicial
