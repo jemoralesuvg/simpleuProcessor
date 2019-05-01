@@ -32,15 +32,15 @@ module test;
 	// procesor
 	Counter 	PC	 		(clk, reset, c_cond & zero |  c_stack, pc_load, pc_count);
 	ROM			mem_inst	(pc_count, instruction);
-	Decoder		Decode		(opcode, c_ALU, c_B, reg_write, mem_write, c_data, s_up, s_down, c_stack);
-	Registers	Reg1		(clk, reg_write, address_A, address_B, address_D, data, a, b);
+	Decoder		decode		(opcode, c_ALU, c_B, reg_write, mem_write, c_data, s_up, s_down, c_stack);
+	Registers	regs		(clk, reg_write, address_A, address_B, address_D, data, a, b);
 	ALU			ALU1		(c_ALU, a, bf, d_alu, zero);	
-	Adder		PC_Add		(pc_count, j_offset, pc_jump);
+	Adder		pc_add		(pc_count, j_offset, pc_jump);
 	MUX8_2x1	mux_data	(c_data, d_alu, d_mem, data);
 	RAM			mem_data	(clk, mem_write, a, b, d_mem);
 	MUX8_2x1	mux_stack	(c_stack, pc_jump, pc_stack, pc_load);
 	Stack		stack		(clk, s_up, s_down, pc_count,pc_stack);
-	MUX8_4x1	Select_B	(c_B, b, inm, inmB, 8'b0, bf);
+	MUX8_4x1	select_B	(c_B, b, inm, inmB, 8'b0, bf);
 	
 	// monitor
 	initial begin
