@@ -27,7 +27,7 @@ module test;
 	
 	
 	// procesor
-	Counter 	PC	 		(clk, reset, c_cond & zero +  c_stack, pc_load, pc_count);
+	Counter 	PC	 		(clk, reset, c_cond & zero |  c_stack, pc_load, pc_count);
 	ROM			mem_inst	(pc_count, instruction);
 	Decoder		Decode		(opcode, c_ALU, c_Inm, c_extend, c_cond, 
 							reg_write, mem_write, c_data, s_up, s_down, c_stack);
