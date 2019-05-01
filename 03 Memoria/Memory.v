@@ -26,6 +26,8 @@ module Registers (
 	
 endmodule
 
+//--------------------------------------------------
+
 module ROM(
   input[7:0]address,
   output[15:0] data_out
@@ -39,6 +41,8 @@ initial begin
  $readmemh("instructions.list", memory);
 end
 endmodule
+
+//--------------------------------------------------
 
 module RAM(
 	input nclk, enable,
