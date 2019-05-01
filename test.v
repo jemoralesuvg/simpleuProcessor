@@ -36,7 +36,7 @@ module test;
 	Registers	Reg1		(clk, reg_write, address_A, address_B, address_D, data, a, b);
 	ALU			ALU1		(c_ALU, a, bf, d_alu, zero);
 	MUX8_2x1	Inm_B		(c_Inm, b, inm, bi);
-	MUX4_2x1	extent		(c_extend, {4{bi[3]}}, address_A , inm[7:4]);
+	MUX4_2x1	extend		(c_extend, {4{inm[3]}}, address_A , inm[7:4]);
 	MUX8_2x1	cond		(c_cond, bi, {8'b0}, bf);
 	Adder		PC_Add		(pc_count, j_offset, pc_jump);
 	MUX8_2x1	mux_data	(c_data, d_alu, d_mem, data);

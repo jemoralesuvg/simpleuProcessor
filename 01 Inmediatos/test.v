@@ -29,7 +29,7 @@ module test;
 	Registers	Reg1	(clk, vdd, address_A, address_B, address_D, data, a, b);
 	ALU			ALU1	(c_ALU, a, bi, data);
 	MUX8_2x1	Inm_B	(c_Inm, b, inm, bi);
-	MUX4_2x1	extent	( c_extend, {4{b[3]}}, address_A , inm[7:4]);
+	MUX4_2x1	extend	( c_extend, {4{inm[3]}}, address_A , inm[7:4]);
 	
 	initial begin
 		$display("PC \tInst \tD \tA \tB");

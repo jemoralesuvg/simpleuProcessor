@@ -32,7 +32,7 @@ module test;
 	Registers	Reg1	(clk, vdd, address_A, address_B, address_D, data, a, b);
 	ALU			ALU1	(c_ALU, a, bf, data, zero);
 	MUX8_2x1	Inm_B	(c_Inm, b, inm, bi);
-	MUX4_2x1	extent	(c_extend, {4{b[3]}}, address_A , inm[7:4]);
+	MUX4_2x1	extent	(c_extend, {4{inm[3]}}, address_A , inm[7:4]);
 	MUX8_2x1	cond	(c_cond, bi, {8'b0}, bf);
 	Adder		PC_Add	(pc_count, j_offset, pc_load);
 	
